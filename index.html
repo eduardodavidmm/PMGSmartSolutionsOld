@@ -40,7 +40,7 @@
         <header class="masthead">
             <div class="container">
                 <div class="masthead-subheading">PMG Smart Solutions</div>
-                <div class="masthead-heading text-uppercase">La digitalización al alcance de tu mano</div>
+                <div class="masthead-heading text-uppercase">La digitalización al alcance de la mano</div>
                 <a class="btn btn-primary btn-xl text-uppercase" href="#services">Más Información</a>
             </div>
         </header>
@@ -292,32 +292,58 @@
                 <!-- To make this form functional, sign up at-->
                 <!-- https://startbootstrap.com/solution/contact-forms-->
                 <!-- to get an API token!-->
-                <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                <!--<form id="contactForm" data-sb-form-api-token="API_TOKEN"> -->
+                    <form id="contactForm">
                     <div class="row align-items-stretch mb-5">
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <!-- Name input-->
-                                <input class="form-control" id="name" type="text" placeholder="Nombre y Apellido" data-sb-validations="required" />
+                            <!--<div class="form-group">
+                                 Name input
+                                <input class="form-control" type="text" placeholder="Nombre y Apellido" name="name" data-sb-validations="required" />
                                 <div class="invalid-feedback" data-sb-feedback="name:required">Se requiere un nombre</div>
-                            </div>
-                            <div class="form-group">
-                                <!-- Email address input-->
+                            </div>    
+                            -->
+                                <div class="form-group">
+                                    <!--<label for="exampleInputEmail1" class="form-label">Nombre</label>-->
+                                    <input type="text" class="form-control" placeholder="Nombre" name="name" required>
+                                  </div>
+                            
+                            <!--<div class="form-group">
+                                 Email address input
                                 <input class="form-control" id="email" type="email" placeholder="Correo Eléctronico" data-sb-validations="required,email" />
                                 <div class="invalid-feedback" data-sb-feedback="email:required">Se requiere un correo eléctronico</div>
                                 <div class="invalid-feedback" data-sb-feedback="email:email">Correo eléctronico no es válido</div>
-                            </div>
-                            <div class="form-group mb-md-0">
-                                <!-- Phone number input-->
+                            </div>-->
+
+                            <div class="form-group">
+                                <!--<label for="exampleInputPassword1" class="form-label">Correo</label>-->
+                                <input type="email" class="form-control" placeholder="Correo" name="email" required>
+                              </div>
+
+                              
+                           <!-- <div class="form-group mb-md-0">
+                                 Phone number input
                                 <input class="form-control" id="phone" type="tel" placeholder="Teléfono" data-sb-validations="required" />
                                 <div class="invalid-feedback" data-sb-feedback="phone:required">Se requiere un teléfono</div>
-                            </div>
+                            </div>-->
+
+                            <div class="form-group">
+                                <!--<label for="exampleInputPassword1" class="form-label">Celular</label>-->
+                                <input type="text" class="form-control" placeholder="Celular" name="phone" required>
+                              </div>
+
                         </div>
-                        <div class="col-md-6">
+                       <!-- <div class="col-md-6">
                             <div class="form-group form-group-textarea mb-md-0">
-                                <!-- Message input-->
+                                 Message input
                                 <textarea class="form-control" id="message" placeholder="Mensaje" data-sb-validations="required"></textarea>
                                 <div class="invalid-feedback" data-sb-feedback="message:required">Mensaje requerido</div>
                             </div>
+                        </div>-->
+                        <div class="col-md-6">
+                        <div class="form-group form-group-textarea mb-md-0">
+                            <!--<label for="exampleInputPassword1" class="form-label">Mensaje</label>-->
+                            <textarea type="text" class="form-control" placeholder="Mensaje" name="message" required></textarea>
+                          </div>
                         </div>
                     </div>
                     <!-- Submit success message-->
@@ -335,8 +361,17 @@
                     <!-- an error submitting the form-->
                     <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
                     <!-- Submit Button-->
-                    <div class="text-center"><button class="btn btn-primary btn-xl text-uppercase disabled" id="submitButton" type="submit">Enviar Mensaje</button></div>
+                    <!--<div class="text-center"><button class="btn btn-primary btn-xl text-uppercase" id="button" type="submit" value="Enviar Mensaje">Enviar Mensaje</button></div> -->
+                    <div class="text-center">
+                    <input type="submit" class="btn btn-primary btn-xl" id="button" value="Enviar Mensaje"> 
+                    <!--class="btn btn-success" -->
+                    </div>
                 </form>
+                <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+                
+                <script type="text/javascript">
+                    emailjs.init('SI42IgV1p43qUvtrZ')
+                </script>
             </div>
         </section>
         <!-- Footer-->
@@ -524,4 +559,27 @@
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
     </body>
+
+    <script>
+        const btn = document.getElementById('button');
+    
+      document.getElementById('contactForm')
+        .addEventListener('submit', function (event) {
+          event.preventDefault();
+    
+          btn.value = 'Enviando...';
+    
+          const serviceID = 'default_service';
+          const templateID = 'template_2x802cn';
+    
+          emailjs.sendForm(serviceID, templateID, this)
+            .then(() => {
+              btn.value = 'Enviar Mensaje';
+              alert('Mensaje Enviado');
+            }, (err) => {
+              btn.value = 'Enviar Mensaje';
+              alert(JSON.stringify(err));
+            });
+        });
+      </script>
 </html>
